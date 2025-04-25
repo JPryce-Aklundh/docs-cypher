@@ -1,12 +1,9 @@
 :description: Information about creating, querying, and deleting vector indexes with Cypher.
-:page-role: new-5.13
 :test-setup-dump: https://github.com/neo4j-graph-examples/recommendations/raw/main/data/recommendations-embeddings-50.dump
 :l2-norm: image:l2.svg["l2"]-norm
 include::https://raw.githubusercontent.com/neo4j-graphacademy/courses/main/asciidoc/courses/llm-vectors-unstructured/ad.adoc[]
 
 = Vector indexes
-
-_Node vector indexes were released as a public beta in Neo4j 5.11 and general availability in Neo4j 5.13._
 
 Vector indexes enable similarity searches and complex analytical queries by representing nodes or properties as vectors in a multidimensional space.
 
@@ -77,7 +74,7 @@ For more information, see xref:indexes/semantic-indexes/vector-indexes.adoc#vect
 A vector index is created by using the `CREATE VECTOR INDEX` command.
 It is recommended to give the index a name when it is created.
 If no name is given when created, a random name will be assigned.
-As of Neo4j 5.16, the index name can also be given as a parameter: `CREATE VECTOR INDEX $name ...`.
+The index name can also be given as a parameter: `CREATE VECTOR INDEX $name ...`.
 
 [NOTE]
 The index name must be unique among both indexes and constraints. +
@@ -86,7 +83,7 @@ A newly created index is not immediately available but is created in the backgro
 [TIP]
 Creating indexes requires link:{neo4j-docs-base-uri}/operations-manual/current/authentication-authorization/database-administration/#access-control-database-administration-index[the `CREATE INDEX` privilege].
 
-.Create vector index for `Movie` nodes on the `embedding` property label:new[Introduced in 5.15]
+.Create vector index for `Movie` nodes on the `embedding` property 
 [source, cypher]
 ----
 CREATE VECTOR INDEX moviePlots IF NOT EXISTS // <1>
@@ -102,10 +99,8 @@ OPTIONS { indexConfig: {
 This means that its default behavior is to throw an error if an attempt is made to create the same index twice.
 With `IF NOT EXISTS`, no error is thrown and nothing happens should an index with the same name, schema or both already exist.
 It may still throw an error should a constraint with the same name exist.
-As of Neo4j 5.17, an informational notification is returned when nothing happens, showing the existing index which blocks the creation.
-<2> Prior to Neo4j 5.23, the `OPTIONS` map was mandatory since a vector index could not be created without setting the vector dimensions and similarity function.
-Since Neo4j 5.23, both can be omitted.
-To read more about the available configuration settings, see xref:indexes/semantic-indexes/vector-indexes.adoc#configuration-settings[].
+An informational notification is returned when nothing happens, showing the existing index which blocks the creation.
+<2> To read more about the available configuration settings, see xref:indexes/semantic-indexes/vector-indexes.adoc#configuration-settings[].
 In this example, the vector dimension is explicitly set to `1536` and the vector similarity function to `'cosine'`, which is generally the preferred similarity function for text embeddings.
 To read more about the available similarity functions, see xref:indexes/semantic-indexes/vector-indexes.adoc#similarity-functions[].
 
@@ -114,7 +109,7 @@ Prior to Neo4j 5.15, node vector indexes were created using the link:{neo4j-docs
 
 You can also create a vector index for relationships with a particular type on a given property using the following syntax:
 
-.Create a vector index for a relationship type on a single property label:new[Introduced in 5.18]
+.Create a vector index for a relationship type on a single property 
 [source, cypher, role=test-skip]
 ----
 CREATE VECTOR INDEX name IF NOT EXISTS
@@ -142,7 +137,6 @@ It is recommended to provide dimensions when creating a vector index.
 
 Accepted values::: `INTEGER` between `1` and `4096` inclusively.
 Default value::: None.
-The setting was mandatory prior to Neo4j 5.23.
 
 [[config-vector.similarity_function]]
 ==== `vector.similarity_function`
@@ -151,16 +145,15 @@ The name of the similarity function used to assess the similarity of two vectors
 To read more about the available similarity functions, see xref:indexes/semantic-indexes/vector-indexes.adoc#similarity-functions[].
 
 Accepted values::: `STRING`: `'cosine'`, `'euclidean'`.
-Default value::: `'cosine'`. The setting was mandatory prior to Neo4j 5.23.
+Default value::: `'cosine'`.
 
-[role=label--new-5.23]
+
 [[config-vector.quantization.enabled]]
 ==== `vector.quantization.enabled`
 
 Quantization is a technique to reduce the size of vector representations.
 Enabling quantization can accelerate search performance but can slightly decrease accuracy.
 It is recommended to enable quantization on machines with limited memory.
-Vector indexes created prior to Neo4j 5.23 have this setting effectively set to `false`.
 
 Accepted values::: `BOOLEAN`: `true`, `false`.
 Default value::: `true`
@@ -169,24 +162,22 @@ Default value::: `true`
 [[config-advanced]]
 === Advanced configuration settings
 
-[role=label--new-5.23]
+
 [[config-vector.hsnw.m]]
 ==== `vector.hnsw.m`
 
 The `M` parameter controls the maximum number of connections each node has in the HNSW (Hierarchical Navigable Small Worlds) graph.
 Increasing this value may lead to greater accuracy at the expense of increased index population and update times, especially for vectors with high dimensionality.
-Vector indexes created prior to Neo4j 5.23 have this setting effectively set to `16`.
 
 Accepted values::: `INTEGER` between `1` and `512` inclusively.
 Default value::: `16`
 
-[role=label--new-5.23]
+
 [[config-vector.hsnw.ef_construction]]
 ==== `vector.hnsw.ef_construction`
 
 The number of nearest neighbors tracked during the insertion of vectors into the HNSW graph.
 Increasing this value increases the quality of the index, and may lead to greater accuracy (with diminishing returns) at the expense of increased index population and update times.
-Vector indexes created prior to Neo4j 5.23 have this setting effectively set to `100`.
 
 Accepted values::: `INTEGER` between `1` and `3200` inclusively.
 Default value::: `100`
@@ -242,7 +233,7 @@ If the query vector itself is not wanted, adding the predicate `WHERE score < 1`
 
 To query a relationship vector index, use the link:{neo4j-docs-base-uri}/operations-manual/current/reference/procedures/#procedure_db_index_vector_queryRelationships[`db.index.vector.queryRelationships`] procedure.
 
-.Signature for `db.index.vector.queryRelationships` label:new[Introduced in 5.18]
+.Signature for `db.index.vector.queryRelationships` 
 [source,syntax]
 ----
 db.index.vector.queryRelationships(indexName :: STRING, numberOfNearestNeighbours :: INTEGER, query :: ANY) :: (relationship :: RELATIONSHIP, score :: FLOAT)
@@ -345,7 +336,7 @@ SHOW VECTOR INDEXES YIELD name, type, entityType, labelsOrTypes, properties
 == Drop vector indexes
 
 A vector index is dropped by using the xref:indexes/search-performance-indexes/managing-indexes.adoc#drop-an-index[same command as for other indexes], `DROP INDEX`.
-As of Neo4j 5.16, the index name can also be given as a parameter when dropping an index:  `DROP INDEX $name`.
+The index name can also be given as a parameter when dropping an index:  `DROP INDEX $name`.
 
 [TIP]
 Dropping indexes requires link:{neo4j-docs-base-uri}/operations-manual/current/database-administration/authentication-authorization/database-administration/#access-control-database-administration-index[the `DROP INDEX` privilege].
@@ -495,7 +486,7 @@ Returns the requested number of approximate nearest neighbor nodes and their sim
 | Use relationship vector index.
 | link:{neo4j-docs-base-uri}/operations-manual/current/reference/procedures/#procedure_db_index_vector_queryRelationships[`db.index.vector.queryRelationships`]
 | Query the given relationship vector index.
-Returns the requested number of approximate nearest neighbor relationships and their similarity score, ordered by score. label:new[Introduced in 5.18]
+Returns the requested number of approximate nearest neighbor relationships and their similarity score, ordered by score. 
 
 | Set node vector property.
 | link:{neo4j-docs-base-uri}/operations-manual/current/reference/procedures/#procedure_db_create_setNodeVectorProperty[`db.create.setNodeVectorProperty`]
@@ -514,7 +505,7 @@ Returns the requested number of approximate nearest neighbor relationships and t
 [[limitations-and-issues]]
 == Limitations and known issues
 
-As of Neo4j 5.13, the vector index is no longer a beta feature.
+The vector index is no longer a beta feature.
 It does, however, still contain some limitations and known issues.
 
 .*Limitations*

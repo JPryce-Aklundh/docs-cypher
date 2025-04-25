@@ -147,7 +147,7 @@ Total database accesses: 36, total allocated memory: 184
 
 ======
 
-[role=label--new-5.17]
+
 [[query-plan-partitioned-all-nodes-scan]]
 === Partitioned All Nodes Scan
 
@@ -233,7 +233,7 @@ Total database accesses: 15, total allocated memory: 184
 
 ======
 
-[role=label--new-5.17]
+
 [[query-plan-partitioned-node-by-label-scan]]
 === Partitioned Node By Label Scan
 
@@ -843,7 +843,7 @@ Total database accesses: 2, total allocated memory: 184
 
 ======
 
-[role=label--new-5.17]
+
 [[query-plan-partitioned-node-index-seek]]
 === Partitioned Node Index Seek
 
@@ -1096,7 +1096,7 @@ Total database accesses: 2, total allocated memory: 184
 
 ======
 
-[role=label--new-5.17]
+
 [[query-plan-partitioned-node-index-seek-by-range]]
 === Partitioned Node Index Seek By Range
 
@@ -3300,8 +3300,7 @@ This restricts the xref:planning-and-tuning/runtimes/index.adoc[Cypher runtime] 
 ======
 
 [NOTE]
-The below query uses a xref:subqueries/call-subquery.adoc#variable-scope-clause[variable scope clause] (introduced in Neo4j 5.23) to import variables into the `CALL` subquery.
-If you are using an older version of Neo4j, use an xref:subqueries/call-subquery.adoc#importing-with[importing `WITH` clause] instead.
+The below query uses a xref:subqueries/call-subquery.adoc#variable-scope-clause[variable scope clause] to import variables into the `CALL` subquery.
 
 .Query
 [source, cypher]
@@ -4255,7 +4254,6 @@ Total database accesses: 5, total allocated memory: 1488
 
 ======
 
-[role=label--new-5.21]
 [[query-plan-stateful-shortest-path-into]]
 === StatefulShortestPath(Into)
 // StatefulShortestPath(Into)
@@ -4315,7 +4313,6 @@ Total database accesses: 43, total allocated memory: 22557
 
 ======
 
-[role=label--new-5.21]
 [[query-plan-stateful-shortest-path-all]]
 === StatefulShortestPath(All)
 // StatefulShortestPath(All)

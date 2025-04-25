@@ -98,7 +98,6 @@ RETURN customer.firstName AS chocolateCustomer
 ----
 // end::clauses_with_new_variable[]
 
-
 .Result
 [role="queryresult",options="header,footer",cols="1*<m"]
 |===
@@ -184,7 +183,6 @@ RETURN x, a
 ----
 // end::clauses_with_subquery[]
 
-
 .Result
 [role="queryresult",options="header,footer",cols="2*<m"]
 |===
@@ -202,7 +200,7 @@ For more information, see xref:subqueries/call-subquery.adoc#import-variables[`C
 == Bind values to variables
 
 `WITH` can be used to assign the values of expressions to variables.
-In the below query, the value of the `STRING` concatenation expression is bound to a new variable `customerFullName`, and the value from the expression `chocolate.price * (1 - customer.discount)` is bound to `chocolateNetPrice`, both of which are then available in the `RETURN` clause.
+In the below query, the value of the xref:expressions/string-operators.adoc[`STRING` concatenation] expression is bound to a new variable `customerFullName`, and the value from the expression `chocolate.price * (1 - customer.discount)` is bound to `chocolateNetPrice`, both of which are then available in the `RETURN` clause.
 
 .Bind values to variables
 // tag::clauses_with_bind_values[]
@@ -215,7 +213,6 @@ RETURN customerFullName,
        chocolateNetPrice
 ----
 // end::clauses_with_bind_values[]
-
 
 .Result
 [role="queryresult",options="header,footer",cols="2*<m"]
@@ -548,3 +545,35 @@ ORDER BY date DESC
 
 2+d|Rows: 3
 |===
+
+In the below query, `WITH` and `WHERE` are used to filter out any `Supplier` nodes whose `totalSales` is less than `1000`.
+Note the use of `DISTINCT` inside `collect()` to remove any duplicate `Customer` nodes.
+
+.Filter property values using `WITH` and `WHERE`
+// tag::clauses_with_filtering[]
+[source, cypher]
+----
+MATCH (s:Supplier)-[:SUPPLIES]->(p:Product)<-[:BUYS]-(c:Customer)
+WITH s,
+     sum(p.price) AS totalSales,
+     count(DISTINCT c) AS uniqueCustomers
+  WHERE totalSales > 1000
+RETURN s.name AS supplier,
+       totalSales,
+       uniqueCustomers
+----
+// end::clauses_with_filtering[]
+
+[role="queryresult",options="header,footer", cols="3*<m"]
+|===
+
+| supplier | totalSales | uniqueCustomers
+
+| "TechCorp" | 5250 | 7
+
+3+d|Rows: 1
+|===
+
+[NOTE]
+The `FILTER` clause can be used as a more concise alternative to `WITH * WHERE <predicate>` constructs.
+For more information, see xref:clauses/filter.adoc#filter-with-where[`FILTER` as a substitute for `WITH * WHERE`].

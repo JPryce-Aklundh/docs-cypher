@@ -24,7 +24,7 @@ This means its default behavior is to throw an error if an attempt is made to cr
 With the `IF NOT EXISTS` flag, no error is thrown and nothing happens should a constraint with the same name or same schema and constraint type already exist.
 It may still throw an error if conflicting data, indexes, or constraints exist.
 Examples of this are nodes with missing properties, indexes with the same name, or constraints with same schema but a different conflicting constraint type.
-As of Neo4j 5.17, an informational notification is returned in case nothing happens showing the existing constraint which blocks the creation.
+An informational notification is returned in case nothing happens showing the existing constraint which blocks the creation.
 
 [[create-property-uniqueness-constraints]]
 === Create property uniqueness constraints
@@ -122,18 +122,18 @@ Where `<TYPE>` is one of the following property types:
 * `ZONED DATETIME`
 * `DURATION`
 * `POINT`
-* `LIST<BOOLEAN NOT NULL>` label:new[Introduced in 5.10]
-* `LIST<STRING NOT NULL>` label:new[Introduced in 5.10]
-* `LIST<INTEGER NOT NULL>` label:new[Introduced in 5.10]
-* `LIST<FLOAT NOT NULL>` label:new[Introduced in 5.10]
-* `LIST<DATE NOT NULL>` label:new[Introduced in 5.10]
-* `LIST<LOCAL TIME NOT NULL>` label:new[Introduced in 5.10]
-* `LIST<ZONED TIME NOT NULL>` label:new[Introduced in 5.10]
-* `LIST<LOCAL DATETIME NOT NULL>` label:new[Introduced in 5.10]
-* `LIST<ZONED DATETIME NOT NULL>` label:new[Introduced in 5.10]
-* `LIST<DURATION NOT NULL>` label:new[Introduced in 5.10]
-* `LIST<POINT NOT NULL>` label:new[Introduced in 5.10]
-* Any closed dynamic union of the above types, e.g. `INTEGER | FLOAT | STRING`. label:new[Introduced in 5.11]
+* `LIST<BOOLEAN NOT NULL>`
+* `LIST<STRING NOT NULL>`
+* `LIST<INTEGER NOT NULL>`
+* `LIST<FLOAT NOT NULL>`
+* `LIST<DATE NOT NULL>`
+* `LIST<LOCAL TIME NOT NULL>`
+* `LIST<ZONED TIME NOT NULL>`
+* `LIST<LOCAL DATETIME NOT NULL>`
+* `LIST<ZONED DATETIME NOT NULL>`
+* `LIST<DURATION NOT NULL>`
+* `LIST<POINT NOT NULL>`
+* Any closed dynamic union of the above types, e.g. `INTEGER | FLOAT | STRING`.
 
 Allowed syntax variations of these types are listed in  xref::values-and-types/property-structural-constructed.adoc#types-synonyms[Types and their synonyms].
 
@@ -197,9 +197,9 @@ Listing constraints requires the link:{neo4j-docs-base-uri}/operations-manual/cu
 ----
 SHOW [
       ALL
-     |NODE UNIQUE[NESS]
-     |REL[ATIONSHIP] UNIQUE[NESS]
-     |UNIQUE[NESS]
+     |NODE [PROPERTY] UNIQUE[NESS]
+     |REL[ATIONSHIP] [PROPERTY] UNIQUE[NESS]
+     |[PROPERTY] UNIQUE[NESS]
      |NODE [PROPERTY] EXIST[ENCE]
      |REL[ATIONSHIP] [PROPERTY] EXIST[ENCE]
      |[PROPERTY] EXIST[ENCE]
@@ -218,9 +218,9 @@ SHOW [
 ----
 SHOW [
       ALL
-     |NODE UNIQUE[NESS]
-     |REL[ATIONSHIP] UNIQUE[NESS]
-     |UNIQUE[NESS]
+     |NODE [PROPERTY] UNIQUE[NESS]
+     |REL[ATIONSHIP] [PROPERTY] UNIQUE[NESS]
+     |[PROPERTY] UNIQUE[NESS]
      |NODE [PROPERTY] EXIST[ENCE]
      |REL[ATIONSHIP] [PROPERTY] EXIST[ENCE]
      |[PROPERTY] EXIST[ENCE]
@@ -248,17 +248,14 @@ The type filtering keywords filters the returned constraints on constraint type:
 | Returns all constraints, no filtering on constraint type.
 This is the default if none is given.
 
-|NODE UNIQUE[NESS]
+|NODE [PROPERTY] UNIQUE[NESS]
 | Returns the node property uniqueness constraints.
-label:new[Introduced in 5.7]
 
-|REL[ATIONSHIP] UNIQUE[NESS]
+|REL[ATIONSHIP] [PROPERTY] UNIQUE[NESS]
 | Returns the relationship property uniqueness constraints.
-label:new[Introduced in 5.7]
 
-|UNIQUE[NESS]
+|[PROPERTY] UNIQUE[NESS]
 | Returns all property uniqueness constraints, for both nodes and relationships.
-label:new[Allowing `UNIQUENESS` was introduced in 5.3]
 
 |NODE [PROPERTY] EXIST[ENCE]
 | Returns the node property existence constraints.
@@ -271,26 +268,21 @@ label:new[Allowing `UNIQUENESS` was introduced in 5.3]
 
 |NODE PROPERTY TYPE
 | Returns the node property type constraints.
-label:new[Introduced in 5.9]
 
 |REL[ATIONSHIP] PROPERTY TYPE
 | Returns the relationship property type constraints.
-label:new[Introduced in 5.9]
 
 |PROPERTY TYPE
 | Returns all property type constraints, for both nodes and relationships.
-label:new[Introduced in 5.9]
 
 |NODE KEY
 | Returns the node key constraints.
 
 |REL[ATIONSHIP] KEY
 | Returns the relationship key constraints.
-label:new[Introduced in 5.7]
 
 |KEY
 | Returns all node and relationship key constraints.
-label:new[Introduced in 5.7]
 
 |===
 

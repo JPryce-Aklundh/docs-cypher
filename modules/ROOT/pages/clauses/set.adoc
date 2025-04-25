@@ -573,7 +573,7 @@ The newly-labeled node is returned by the query.
 Labels added: 1
 |===
 
-[role=label--new-5.24]
+
 [[set-set-a-label-using-a-parameter]]
 == Set a label using a parameter
 
@@ -659,7 +659,7 @@ Labels added: 4
 |===
 
 
-[role=label--new-5.24]
+
 [[set-set-multiple-labels-using-a-parameter]]
 == Set multiple labels using parameters
 

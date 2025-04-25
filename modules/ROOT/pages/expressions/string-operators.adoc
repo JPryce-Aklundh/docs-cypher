@@ -16,11 +16,13 @@ For additional expressions that evaluate to `STRING` values, see xref:functions/
 == Examples
 
 .`||` and `+`
+// tag::expressions_string_concatenation_operators_basic[]
 [source, cypher]
 ----
 RETURN 'Neo' || '4j' AS result1,
        'Neo' + '4j' AS result2
 ----
+// end::expressions_string_concatenation_operators_basic[]
 
 .Result
 [role="queryresult",options="header,footer",cols="2*<m"]
@@ -34,7 +36,7 @@ RETURN 'Neo' || '4j' AS result1,
 
 The xref:functions/string.adoc#functions-tostring[`toString()`] function can be used to concatenate non-`STRING` values into a `STRING` value.
 
-.Concatenation using `toString()` function
+.Concatenation using the `toString()` function
 [source, cypher]
 ----
 RETURN 'The number is: ' || toString(42) AS result
@@ -52,12 +54,14 @@ RETURN 'The number is: ' || toString(42) AS result
 
 Cypher does not insert spaces when concatenating `STRING` values.
 
-.Adding whitespaces in `STRING` concatenation
+.Add whitespaces in string concatenation
+// tag::expressions_string_concatenation_operators_whitespace[]
 [source, cypher]
 ----
 RETURN 'Alpha' || 'Beta' AS result1, 
        'Alpha' || ' ' || 'Beta' AS result2
 ----
+// end::expressions_string_concatenation_operators_whitespace[]
 
 .Result
 [role="queryresult",options="header,footer",cols="2*<m"]
@@ -69,13 +73,15 @@ RETURN 'Alpha' || 'Beta' AS result1,
 2+d| Rows: 1
 |===
 
-.Concatenating `STRING` properties
+.Concatenate `STRING` properties
+// tag::expressions_string_concatenation_operators_properties[]
 [source, cypher]
 ----
 CREATE (p:Person {firstName: 'Keanu', lastName: 'Reeves'})
 SET p.fullName = p.firstName || ' ' || p.lastName
 RETURN p.fullName AS fullName
 ----
+// end::expressions_string_concatenation_operators_properties[]
 
 .Result
 [role="queryresult",options="header,footer",cols="1*<m"]
@@ -87,7 +93,7 @@ RETURN p.fullName AS fullName
 1+d| Rows: 1
 |===
 
-.Adding separators in `STRING` concatenation
+.Add separators in string concatenation
 [source, cypher]
 ----
 RETURN 'Hello' || ', ' || 'World' AS result
@@ -103,11 +109,14 @@ RETURN 'Hello' || ', ' || 'World' AS result
 1+d| Rows: 1
 |===
 
-.Adding prefix, suffix, and separators in `STRING` concatenation
+.Add prefix, suffix, and separators in string concatenation
+// tag::expressions_string_concatenation_operators_prefix_suffix_separator[]
 [source, cypher]
 ----
 RETURN 'My favorite fruits are: ' || 'apples' || ', ' || 'bananas' || ', and ' || 'oranges' || '.' AS result
 ----
+// end::expressions_string_concatenation_operators_prefix_suffix_separator[]
+
 
 .Result
 [role="queryresult",options="header,footer",cols="1*<m"]
@@ -125,11 +134,13 @@ RETURN 'My favorite fruits are: ' || 'apples' || ', ' || 'bananas' || ', and ' |
 `STRING` values in a `LIST` can be concatenated using the xref:functions/list.adoc#functions-reduce[`reduce()`] function.
 
 .Concatenate `STRING` values in a `LIST`
+// tag::expressions_string_concatenation_operators_concatenate_strings_in_list[]
 [source, cypher]
 ----
 WITH ['Neo', '4j'] AS list
 RETURN reduce(acc = '', item IN list| acc || item) AS result
 ----
+// end::expressions_string_concatenation_operators_concatenate_strings_in_list[]
 
 .Result
 [role="queryresult",options="header,footer",cols="1*<m"]
@@ -167,12 +178,14 @@ To skip the first `NULL` value in a list of expressions, use the xref:functions/
 In the following query, `coalesce()` is used with `reduce()` to replace each `NULL` value in the `LIST` with an empty `STRING` (`''`).
 This ensures that all `NULL` values are effectively skipped, allowing the `reduce()` function to concatenate the remaining `STRING` values.
 
-.Using `reduce()` and `coalesce()` to skip `NULL` values when concatenating a `LIST`
+.Using `reduce()` and `coalesce()` to skip `NULL` values when concatenating `STRING` values in a `LIST`
+// tag::expressions_string_concatenation_operators_skip_null[]
 [source, cypher]
 ----
 WITH ['Apples', NULL, 'Bananas', NULL, 'Oranges', NULL] AS list
 RETURN 'My favorite fruits are: ' || reduce(acc = head(list), item IN tail(list) | acc || coalesce(', ' || item, '')) || '.' AS result
 ----
+// end::expressions_string_concatenation_operators_skip_null[]
 
 .Result
 [role="queryresult",options="header,footer",cols="1*<m"]
@@ -206,14 +219,17 @@ RETURN 'My favorite fruits are: ' || coalesce(reduce(acc = head(list), item IN t
 1+d|Rows: 3
 |===
 
-Additionally, xref:values-and-types/lists.adoc#cypher-list-comprehension[list comprehension] allows concatenating a `STRING` value to each item in a `LIST` to generate a new `LIST` of modified `STRING` values.
+Additionally, xref:expressions/list-expressions.adoc#list-comprehension[list comprehension] allows concatenating a `STRING` value to each item in a `LIST` to generate a new `LIST` of modified `STRING` values.
 
 .List comprehension with `STRING` concatenation on `LIST` items
+// tag::expressions_string_concatenation_operators_list_comprehension[]
 [source, cypher]
 ----
 WITH ['Apples', 'Bananas', 'Oranges'] AS list 
 RETURN [item IN list | 'Eat more ' || item || '!'] AS result
 ----
+// end::expressions_string_concatenation_operators_list_comprehension[]
+
 
 .Result
 [role="queryresult",options="header,footer",cols="1*<m"]

@@ -161,7 +161,6 @@ Using a `CALL` subquery can therefore reduce the amount of heap memory required 
 Variables from the outer scope must be explicitly imported into the inner scope of the `CALL` subquery, either by using a xref:subqueries/call-subquery.adoc#variable-scope-clause[variable scope clause] or an xref:subqueries/call-subquery.adoc#importing-with[importing `WITH` clause] (deprecated).
 As the subquery is evaluated for each incoming input row, the imported variables are assigned the corresponding values from that row.
 
-[role=label--new-5.23]
 [[variable-scope-clause]]
 === The variable scope clause
 
@@ -279,7 +278,7 @@ RETURN count(t) AS totalTeams, totalPlayers
 
 [NOTE]
 =====
-As of Neo4j 5.23, it is deprecated to use `CALL` subqueries without a variable scope clause.
+`CALL` subqueries without a variable scope clause are deprecated.
 
 .Deprecated
 [source, cypher]
@@ -423,7 +422,6 @@ RETURN largeLists
 
 ====
 
-[role=label--new-5.24]
 [[optional-call]]
 == Optional subquery calls
 
@@ -573,7 +571,7 @@ RETURN
 [[call-post-union]]
 == Post-union processing
 
-Call subqueries can be used to further process the results of a xref:queries/combined-queries.adoc[] query.
+Call subqueries can be used to further process the results of a xref:queries/combined-queries.adoc[`UNION`] query.
 
 .Using `UNION` within a `CALL` subquery
 ====

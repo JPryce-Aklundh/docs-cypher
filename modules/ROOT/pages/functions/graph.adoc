@@ -182,7 +182,7 @@ For more information, see xref:subqueries/call-subquery.adoc#import-variables[CA
 
 ======
 
-[role=label--new-5.13]
+
 [[functions-graph-by-elementid]]
 == graph.byElementId()
 
