@@ -99,6 +99,16 @@ a|
 The Cypher query option `eagerAnalyzer` is deprecated and will be removed without a replacement.
 Eagerness analysis is systematically performed on the logical plan regardless of the value provided.
 
+a|
+label:functionality[]
+label:deprecated[]
+[source, cypher, role="noheader"]
+----
+dbms.quarantineDatabase()
+----
+
+a| The link:{neo4j-docs-base-uri}/operations-manual/procedures/#procedure_dbms_quarantineDatabase[`dbms.quarantineDatabase()`] procedure is deprecated.
+
 |===
 
 
@@ -601,6 +611,17 @@ RETURN x, y
 
 | Using the xref:subqueries/call-subquery.adoc#importing-with[`WITH` clause to import variables] to `CALL` subqueries is deprecated, and replaced with a xref:subqueries/call-subquery.adoc#variable-scope-clause[variable scope clause].
 It is also deprecated to use naked subqueries without a variable scope clause.
+
+a|
+label:functionality[]
+label:deprecated[]
+[source, cypher, role="noheader"]
+----
+dbms.cluster.uncordonServer()
+----
+
+a| The link:{neo4j-docs-base-uri}/operations-manual/procedures/#procedure_dbms_cluster_uncordonServer[`dbms.cluster.uncordonServer()`] procedure is deprecated.
+
 |===
 
 === Updated features
@@ -1001,6 +1022,26 @@ These functions return a `FLOAT` representing the similarity of vectors `a` and 
 [[cypher-deprecations-additions-removals-5.17]]
 == Neo4j 5.17
 
+=== Deprecated features
+
+[cols="2", options="header"]
+|===
+| Feature
+| Details
+
+a|
+label:functionality[]
+label:deprecated[]
+[source, cypher, role=noheader]
+----
+cdc.current()
+cdc.earliest()
+cdc.query()
+----
+
+a| These  link:{neo4j-docs-base-uri}/operations-manual/procedures//#_change_data_capture_cdc[CDC procedures] are deprecated.
+|===
+
 === Updated features
 
 [cols="2", options="header"]
@@ -1347,6 +1388,25 @@ This is a mirror of the already existing keyword `DETACH`.
 [[cypher-deprecations-additions-removals-5.13]]
 == Neo4j 5.13
 
+=== Deprecated features
+
+[cols="2", options="header"]
+|===
+| Feature
+| Details
+
+a|
+label:functionality[]
+label:deprecated[]
+[source, cypher, role="noheader"]
+----
+db.create.setVectorProperty()
+db.index.vector.createNodeIndex()
+----
+a| The link:{neo4j-docs-base-uri}/operations-manual/procedures/#procedure_db_create_setvectorproperty[`db.create.setVectorProperty()`] and link:{neo4j-docs-base-uri}/operations-manual/procedures/#procedure_db_index_vector_createnodeindex[`db.index.vector.createNodeIndex()`] procedures are deprecated.
+
+|===
+
 === Updated features
 
 [cols="2", options="header"]
@@ -1673,6 +1733,26 @@ a|
 Creating a node or relationship entity,
 and then referencing that entity in a property definition in the same `CREATE` clause is deprecated.
 Split the `CREATE` clause into two separate clauses instead.
+
+a|
+label:functionality[]
+label:deprecated[]
+[source, cypher, role="noheader"]
+----
+dbms.upgrade()
+----
+
+a| The link:{neo4j-docs-base-uri}/operations-manual/procedures/#procedure_dbms_upgrade[`dbms.upgrade()`] procedure is deprecated.
+
+a|
+label:functionality[]
+label:deprecated[]
+[source, cypher, role="noheader"]
+----
+dbms.upgradeStatus()
+----
+
+a| The link:{neo4j-docs-base-uri}/operations-manual/procedures/#procedure_dbms_upgradestatus[`dbms.upgradeStatus()`] procedure is deprecated.
 
 |===
 
@@ -2003,8 +2083,25 @@ New fine-grained control mechanism to control how an inner transaction impacts s
 [[cypher-deprecations-additions-removals-5.6]]
 == Neo4j 5.6
 
-=== New features
+=== Deprecated features
 
+[cols="2", options="header"]
+|===
+| Feature
+| Details
+
+a|
+label:functionality[]
+label:deprecated[]
+----
+dbms.cluster.readReplicaToggle()
+----
+
+a| The link:{neo4j-docs-base-uri}/operations-manual/procedures/#procedure_dbms_cluster_readreplicatoggle[`dbms.cluster.readReplicaToggle()`] procedure is deprecated.
+
+|===
+
+=== New features
 
 [cols="2", options="header"]
 |===
