@@ -440,37 +440,27 @@ If a conditional query has a `NEXT` in any of its `THEN` or `ELSE` blocks, it is
 [source,cypher]
 ----
 MATCH (c:Customer)-[:BUYS]->(p:Product)
-RETURN c AS customer, sum(p.price) AS sum
+RETURN c AS customer, p AS product
 
 NEXT
 
-WHEN sum >= 1000 THEN {
-  RETURN customer.firstName AS customer, "club 1000 plus" AS customerType, sum AS sum
-}
-ELSE {
-  RETURN customer AS customer, sum * (1 - customer.discount) AS finalSum
-
-  NEXT
-
-  RETURN customer.firstName AS customer, "club below 1000" AS customerType, finalSum AS sum
-}
+RETURN product.name AS product,
+       COUNT(customer) AS numberOfCustomers
 ----
-// end::sequential_queries_in_conditional_queries[]
+// end::sequential_queries_aggregation[]
 
 .Result
-[role="queryresult",options="header,footer",cols="3*<m"]
+[role="queryresult",options="header,footer",cols="2*<m"]
 |===
-| customer | customerType      | sum
+| product | numberOfCustomers
 
-| "Amir"   | "club 1000 plus"  | 1005
-| "Mateo"  | "club 1000 plus"  | 1015
-| "Leila"  | "club 1000 plus"  | 1000
-| "Yusuf"  | "club 1000 plus"  | 1005
-| "Keisha" | "club below 1000" | 200.0
-| "Hannah" | "club below 1000" | 221.0
-| "Niko"   | "club below 1000" | 570.0
+| "Laptop"    | 4
+| "Chocolate" | 3
+| "Headphones"| 3
+| "Coffee"    | 3
+| "Phone"     | 1
 
-3+d|Rows: 3
+2+d|Rows: 5
 |===
 
 The query above calculates the total price of products purchased per customer and then only applies the customer discount to sums below 1000.
